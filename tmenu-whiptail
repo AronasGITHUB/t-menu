@@ -1,0 +1,146 @@
+#!/bin/bash
+
+# Function to show the main menu
+show_main_menu() {
+    while true; do
+        choice=$(whiptail --backtitle "tmenu - Terminal, in GUI" \
+                          --title "tmenu - Main Menu" \
+                          --menu "Choose an option:" 21 50 15 \
+                          0 "Terminal - tmux" \
+                          1 "Browser - Links" \
+                          2 "Mail - Mutt" \
+                          3 "Files - Midnight Commander (mc)" \
+                          4 "Text Editor - nano, vim, emacs" \
+                          5 "Time and Date" \
+                          6 "Calculator" \
+                          7 "Games - ninvaders" \
+                          8 "Fun - neofetch, cmatrix, cbonsai" \
+                          9 "Exit" 3>&1 1>&2 2>&3)
+
+        case $choice in
+            0)
+                clear
+                tmux # Launch tmux terminal multiplexer
+                ;;
+            1)
+                clear
+                links # Launch the Links browser
+                ;;
+            2)
+                clear
+                mutt # Launch the Mutt mail client
+                ;;
+            3)
+                clear
+                mc # Launch Midnight Commander
+                ;;
+            4)
+                text_editor_menu # Call function to show text editor options
+                ;;
+            5)
+                show_time_date # Show time and date
+                ;;
+            6)
+                clear
+                bc # Launch the calculator
+                ;;
+            7)
+                clear
+                ninvaders # Launch the ninvaders game
+                ;;
+            8)
+                fun_menu # Call function to show fun options
+                ;;
+            9)
+                clear
+                exit 0 # Exit the script
+                ;;
+            *)
+                whiptail --backtitle "tmenu - Terminal, in GUI" \
+                         --msgbox "Error: Invalid option. Please try again." 5 40
+                ;;
+        esac
+    done
+}
+
+# Function to show text editor options
+text_editor_menu() {
+    while true; do
+        editor_choice=$(whiptail --backtitle "tmenu - Terminal, in GUI" \
+                                 --title "tmenu - Text Editor Menu" \
+                                 --menu "Choose a text editor:" 15 50 4 \
+                                 1 "Nano" \
+                                 2 "Vim" \
+                                 3 "Emacs" \
+                                 4 "Back" 3>&1 1>&2 2>&3)
+
+        case $editor_choice in
+            1)
+                clear
+                nano # Launch Nano text editor
+                ;;
+            2)
+                clear
+                vim # Launch Vim text editor
+                ;;
+            3)
+                clear
+                emacs # Launch Emacs text editor
+                ;;
+            4)
+                break # Go back to the main menu
+                ;;
+            *)
+                whiptail --backtitle "tmenu - Terminal, in GUI" \
+                         --msgbox "Error: Invalid option. Please try again." 5 40
+                ;;
+        esac
+    done
+}
+
+# Function to show time and date
+show_time_date() {
+    current_time=$(date)
+    whiptail --backtitle "tmenu - Terminal, in GUI" \
+             --title "tmenu - Current Date and Time" \
+             --msgbox "Current Date and Time:\n$current_time" 10 50
+}
+
+# Function to show fun options
+fun_menu() {
+    while true; do
+        fun_choice=$(whiptail --backtitle "tmenu - Terminal, in GUI" \
+                              --title "tmenu - Fun Menu" \
+                              --menu "Choose a fun application:" 15 50 4 \
+                              1 "Neofetch" \
+                              2 "Cmatrix" \
+                              3 "Cbonsai" \
+                              4 "Back" 3>&1 1>&2 2>&3)
+
+        case $fun_choice in
+            1)
+                clear
+                neofetch # Launch Neofetch
+                ;;
+            2)
+                clear
+                cmatrix # Launch Cmatrix
+                ;;
+            3)
+                clear
+                cbonsai # Launch Cbonsai
+                ;;
+            4)
+                break # Go back to the main menu
+                ;;
+            *)
+                whiptail --backtitle "tmenu - Terminal, in GUI" \
+                         --msgbox "Error: Invalid option. Please try again." 5 40
+                ;;
+        esac
+    done
+}
+
+# Start the main menu
+clear
+show_main_menu
